@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Be My Forever 💗✨</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Ensure full height */
+    html, body {
+      height: 100%;
+    }
+
+    /* Full-page gradient background */
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #f3e5f5, #e1bee7, #fff8e1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #2f2f33;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 550px;
+      width: 100%;
+      padding: 30px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 18px;
+      color: #5e3b87;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      color: #4b3f72;
+    }
+
+    .question {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-top: 18px;
+      margin-bottom: 20px;
+      color: #4b2e83;
+    }
+
+    button {
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin: 8px;
+    }
+
+    #yesBtn {
+      background: #d1c4e9;
+      color: #4b2e83;
+    }
+
+    #noBtn {
+      background: #ffe082;
+      color: #6a4c93;
+    }
+
+    #message {
+      margin-top: 22px;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #512da8;
+    }
+
+    @media (max-width:480px) {
+      h1 { font-size: 1.75rem; }
+      p { font-size: 1rem; }
+      .question { font-size: 1.15rem; }
+      button { font-size: 1rem; padding: 10px 24px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hello Anna mi amor 💖</h1>
+
+    <p>
+      A single day isn't enough to celebrate how much you mean to me.<br>
+      Everyday is a reason to appreciate nature's gift to my life.<br>
+      You are everything special in my life.<br>
+      I love you baby 💕
+    </p>
+
+    <p class="question">
+      I want to spend the rest of my days with you.<br>
+      Will you be my forever? 💖
+    </p>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes Baby ❣️💘</button>
+      <button id="noBtn">No 😢</button>
+    </div>
+
+    <h2 id="message"></h2>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

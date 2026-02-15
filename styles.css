@@ -1,0 +1,102 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Georgia', serif;
+  text-align: center;
+  background: linear-gradient(120deg, #f3e5f5, #e1bee7, #fff8e1);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #2f2f33;
+  opacity: 1; /* ensure visible on page load */
+  transition: opacity 1s ease;
+}
+
+/* Container */
+.container {
+  max-width: 550px;
+  width: 100%;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Headers & Text */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  margin-bottom: 18px;
+  color: #5e3b87;
+  text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  color: #4b3f72;
+}
+
+.question {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: 18px;
+  margin-bottom: 20px;
+  color: #4b2e83;
+}
+
+/* Buttons */
+button {
+  font-size: 1.05rem;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin: 8px;
+  font-family: 'Georgia', serif;
+}
+
+/* Yes Button */
+#yesBtn {
+  background: #d1c4e9;
+  color: #4b2e83;
+  box-shadow: 0 4px 10px rgba(209, 196, 233, 0.6);
+}
+#yesBtn:hover {
+  transform: scale(1.08);
+  background: #b39ddb;
+}
+
+/* No Button */
+#noBtn {
+  background: #ffe082;
+  color: #6a4c93;
+  box-shadow: 0 4px 10px rgba(255, 224, 130, 0.6);
+}
+
+/* Message Text */
+#message {
+  margin-top: 22px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #512da8;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 480px) {
+  h1 { font-size: 1.75rem; }
+  p { font-size: 1rem; }
+  .question { font-size: 1.15rem; }
+  button { font-size: 1rem; padding: 10px 24px; }
+}

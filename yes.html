@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever 💖</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  overflow: hidden;
+  opacity: 0;
+  background: linear-gradient(135deg, #ffe8b0, #ecd8ff);
+  animation: glow 8s infinite alternate;
+  transition: opacity 2s ease;
+}
+
+@keyframes glow {
+  from { background: linear-gradient(135deg, #ffe8b0, #ecd8ff); }
+  to { background: linear-gradient(135deg, #ffd700, #d8b4ff); }
+}
+
+.container {
+  margin-top: 25vh;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 28px; /* smaller & romantic */
+  font-weight: 400;
+  line-height: 1.6;
+  color: #5e3b87;
+  text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.6);
+}
+
+.glitter {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+.heart {
+  position: absolute;
+  font-size: 18px;
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>
+    I knew you would pick Yes, mi amor 💖<br>
+    My heartbeat 💓<br>
+    Thank you for bringing everything beautiful into my life ✨💕
+  </h1>
+</div>
+
+<audio id="bgMusic" src="music.mp3"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Fade in page
+  document.body.style.opacity = "1";
+
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.5;
+  music.play();
+
+  // Glitter sparkles
+  for (let i = 0; i < 200; i++) {
+    let glitter = document.createElement("div");
+    glitter.classList.add("glitter");
+    glitter.style.left = Math.random() * window.innerWidth + "px";
+    glitter.style.animationDuration = (Math.random() * 4 + 2) + "s";
+    glitter.style.background = Math.random() > 0.5 ? "#ffd700" : "#c8a2ff";
+    if (Math.random() > 0.6) glitter.style.animation += ", twinkle 2s infinite";
+    document.body.appendChild(glitter);
+  }
+
+  // Floating hearts
+  setInterval(() => {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.bottom = "0px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 800);
+
+});
+</script>
+</body>
+</html>
