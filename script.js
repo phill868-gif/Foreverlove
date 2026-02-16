@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // NO click
   noBtn.addEventListener("click", () => {
     message.innerHTML =
-      "No is not an option 😌 It's me and you together forever 💖";
+      "You know i will always make you smile💖";
   });
 
   // NO runs away safely (mobile + desktop)
