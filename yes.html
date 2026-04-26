@@ -27,7 +27,7 @@ body {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 400;
   color: #5e3b87;
   line-height: 1.6;
@@ -54,14 +54,13 @@ h1 {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.4s ease; /* FAST transition */
+  transition: opacity 0.4s ease;
 }
 
 .active {
   opacity: 1;
 }
 
-/* MEDIA */
 .slide img,
 .slide video {
   width: 100%;
@@ -70,19 +69,30 @@ h1 {
   border-radius: 15px;
 }
 
-/* MUSIC */
-audio {
-  display: none;
+/* MUSIC BUTTON */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #d4af37;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 BACKGROUND MUSIC -->
-<audio id="bgMusic" loop>
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic" loop preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
+
+<button class="music-btn" id="musicBtn">🔊 Play Music</button>
 
 <div class="container">
 
@@ -126,12 +136,32 @@ document.addEventListener("DOMContentLoaded", function () {
   let index = 0;
   let timer;
 
-  // 🎵 MUSIC START (browser-safe)
   const music = document.getElementById("bgMusic");
+  const musicBtn = document.getElementById("musicBtn");
 
-  document.body.addEventListener("click", () => {
-    music.play().catch(() => {});
-  }, { once: true });
+  // 🎵 MUSIC CONTROL (WORKS ON ALL DEVICES)
+  musicBtn.addEventListener("click", () => {
+    if (music.paused) {
+      music.volume = 0;
+      music.play();
+
+      // smooth fade in
+      let vol = 0;
+      let fade = setInterval(() => {
+        if (vol < 0.5) {
+          vol += 0.05;
+          music.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+
+      musicBtn.innerText = "🔇 Stop Music";
+    } else {
+      music.pause();
+      musicBtn.innerText = "🔊 Play Music";
+    }
+  });
 
   function stopVideos() {
     slides.forEach(slide => {
@@ -151,28 +181,21 @@ document.addEventListener("DOMContentLoaded", function () {
     slides.forEach(slide => slide.classList.remove("active"));
 
     let current = slides[i];
-
-    // ⚡ INSTANT SWITCH (NO DELAY)
     current.classList.add("active");
 
     let video = current.querySelector("video");
 
     if (video) {
-
       video.muted = true;
       video.playsInline = true;
 
-      // 🎬 PLAY IMMEDIATELY
       video.play().catch(() => {
         timer = setTimeout(nextSlide, 3000);
       });
 
-      video.onended = () => {
-        nextSlide();
-      };
+      video.onended = () => nextSlide();
 
     } else {
-      // 📸 IMAGE = 5 SECONDS
       timer = setTimeout(nextSlide, 5000);
     }
   }
