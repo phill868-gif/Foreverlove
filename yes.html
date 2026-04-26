@@ -14,26 +14,26 @@ body {
   background: linear-gradient(135deg, #ffe8b0, #ecd8ff);
 }
 
-/* HEADER */
+/* MAIN HEADER */
 h1 {
   font-size: 22px;
   color: #5e3b87;
   margin-top: 25px;
 }
 
-/* MESSAGE */
+/* 💖 ROMANTIC MESSAGE */
 .message {
   max-width: 85%;
-  margin: 10px auto;
+  margin: 10px auto 0;
   font-size: 15px;
+  line-height: 1.6;
   color: #6b4aa0;
   font-style: italic;
-  line-height: 1.6;
 }
 
 /* MUSIC BUTTON */
 .music-btn {
-  margin-top: 10px;
+  margin-top: 15px;
   padding: 10px 18px;
   border: none;
   border-radius: 20px;
@@ -43,9 +43,9 @@ h1 {
   cursor: pointer;
 }
 
-/* MEMORIES */
+/* MEMORIES TITLE */
 .memories {
-  margin-top: 18px;
+  margin-top: 20px;
   font-size: 20px;
   font-weight: 500;
   color: #d4af37;
@@ -56,7 +56,7 @@ h1 {
   position: relative;
   width: 320px;
   height: 420px;
-  margin: 20px auto 40px;
+  margin: 15px auto 40px;
   overflow: hidden;
   border-radius: 15px;
 }
@@ -66,7 +66,7 @@ h1 {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
 }
 
 .active {
@@ -78,7 +78,6 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
 }
 </style>
 </head>
@@ -90,20 +89,24 @@ h1 {
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<h1>Happy Birthday My Love 💖</h1>
+<!-- 💖 HEADER -->
+<h1>Happy Birthday My QUEEN 💖</h1>
 
+<!-- 💬 NEW ROMANTIC TEXT -->
 <div class="message">
   Happy birthday my heartbeat, my world 💖<br>
-  Today is all about you and how much you mean to me ✨
+  Since we don't want a loud post, i made this for you, i love you baby 💕✨
 </div>
 
-<button class="music-btn" id="musicBtn">💖 Play Music</button>
+<!-- 🎵 MUSIC BUTTON -->
+<button class="music-btn" id="musicBtn">💖 Please Click here 🙏🏿🥹</button>
 
-<div class="memories">Memories 💖</div>
+<!-- 💎 MEMORIES -->
+<div class="memories">MEMORIES 💖</div>
 
+<!-- SLIDER -->
 <div class="slider">
 
-  <!-- IMAGES -->
   <div class="slide active"><img src="photo1.jpg"></div>
   <div class="slide"><img src="photo2.jpg"></div>
   <div class="slide"><img src="photo3.jpg"></div>
@@ -114,7 +117,6 @@ h1 {
   <div class="slide"><img src="photo8.jpg"></div>
   <div class="slide"><img src="photo9.jpg"></div>
 
-  <!-- VIDEOS -->
   <div class="slide"><video src="video1.mp4" muted playsinline></video></div>
   <div class="slide"><video src="video2.mp4" muted playsinline></video></div>
   <div class="slide"><video src="video3.mp4" muted playsinline></video></div>
@@ -129,13 +131,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const music = document.getElementById("bgMusic");
   const btn = document.getElementById("musicBtn");
 
-  let musicStarted = false;
+  let started = false;
 
-  // 🎵 MUSIC (ONE TIME START)
+  // 🎵 MUSIC START (ONCE ONLY)
   btn.addEventListener("click", () => {
 
-    if (!musicStarted) {
-      musicStarted = true;
+    if (!started) {
+      started = true;
 
       music.volume = 0;
       music.play().catch(() => {});
@@ -148,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           clearInterval(fade);
         }
-      }, 120);
+      }, 150);
 
       btn.innerText = "🎵 Playing...";
       btn.disabled = true;
@@ -157,31 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   });
 
-  // =========================
-  // 💎 PRELOAD MEDIA (FIX SKIPS)
-  // =========================
-  const slides = document.querySelectorAll(".slide");
-
-  slides.forEach(slide => {
-
-    const img = slide.querySelector("img");
-    const video = slide.querySelector("video");
-
-    if (img) {
-      const pre = new Image();
-      pre.src = img.src;
-    }
-
-    if (video) {
-      video.preload = "auto";
-      video.load();
-    }
-
-  });
-
-  // =========================
-  // 🎞 SLIDER ENGINE (SMOOTH)
-  // =========================
+  // SLIDER
+  let slides = document.querySelectorAll(".slide");
   let index = 0;
   let timer;
 
@@ -208,21 +187,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let video = current.querySelector("video");
 
     if (video) {
-
-      const playVideo = () => {
-        video.play().catch(() => {
-          timer = setTimeout(nextSlide, 2500);
-        });
-      };
-
-      if (video.readyState >= 2) {
-        playVideo();
-      } else {
-        video.onloadeddata = playVideo;
-      }
-
+      video.play().catch(() => {
+        timer = setTimeout(nextSlide, 3000);
+      });
       video.onended = nextSlide;
-
     } else {
       timer = setTimeout(nextSlide, 5000);
     }
