@@ -21,7 +21,6 @@ body {
   to { background: linear-gradient(135deg, #ffd700, #d8b4ff); }
 }
 
-/* MAIN TEXT */
 .container {
   margin-top: 10vh;
   padding: 20px;
@@ -34,7 +33,6 @@ h1 {
   line-height: 1.6;
 }
 
-/* INITIALS */
 .initials {
   margin-top: 10px;
   font-size: 18px;
@@ -59,15 +57,17 @@ h1 {
   transition: opacity 1.2s ease;
 }
 
-.slide img {
+.active {
+  opacity: 1;
+}
+
+/* IMAGE + VIDEO */
+.slide img,
+.slide video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 15px;
-}
-
-.active {
-  opacity: 1;
 }
 
 /* GLITTER */
@@ -104,9 +104,86 @@ h1 {
 
   <h1>
     I knew you would pick YES 💖<br>
-    You are my peace, my love, my forever ✨
+    You are my forever, my peace, my love ✨
   </h1>
 
+  <div class="initials">A ❤️</div>
+
+  <!-- SLIDER -->
+  <div class="slider">
+
+    <!-- PHOTOS -->
+    <div class="slide active"><img src="photo1.jpg"></div>
+    <div class="slide"><img src="photo2.jpg"></div>
+    <div class="slide"><img src="photo3.jpg"></div>
+    <div class="slide"><img src="photo4.jpg"></div>
+    <div class="slide"><img src="photo5.jpg"></div>
+    <div class="slide"><img src="photo6.jpg"></div>
+    <div class="slide"><img src="photo7.jpg"></div>
+    <div class="slide"><img src="photo8.jpg"></div>
+    <div class="slide"><img src="photo9.jpg"></div>
+
+    <!-- VIDEOS -->
+    <div class="slide"><video src="video1.mp4" muted playsinline></video></div>
+    <div class="slide"><video src="video2.mp4" muted playsinline></video></div>
+    <div class="slide"><video src="video3.mp4" muted playsinline></video></div>
+    <div class="slide"><video src="video4.mp4" muted playsinline></video></div>
+    <div class="slide"><video src="video5.mp4" muted playsinline></video></div>
+
+  </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  let slides = document.querySelectorAll(".slide");
+  let index = 0;
+  let timer;
+
+  function showSlide(i) {
+
+    slides.forEach(slide => {
+      slide.classList.remove("active");
+
+      let video = slide.querySelector("video");
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+
+    let current = slides[i];
+    current.classList.add("active");
+
+    let video = current.querySelector("video");
+
+    if (video) {
+      video.play();
+
+      video.onended = () => {
+        nextSlide();
+      };
+
+    } else {
+      // ⏱ IMAGE DURATION = 8 SECONDS (3 + 5 extra)
+      timer = setTimeout(nextSlide, 8000);
+    }
+  }
+
+  function nextSlide() {
+    clearTimeout(timer);
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }
+
+  showSlide(index);
+
+});
+</script>
+
+</body>
+</html>
   <!-- YOUR INITIALS -->
   <div class="initials">A ❤️ (replace with your initials)</div>
 
