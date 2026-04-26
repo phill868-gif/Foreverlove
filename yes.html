@@ -141,17 +141,22 @@ document.addEventListener("DOMContentLoaded", function () {
   let index = 0;
   let timer;
 
-  function showSlide(i) {
-
+  function clearVideos() {
     slides.forEach(slide => {
-      slide.classList.remove("active");
-
       let video = slide.querySelector("video");
       if (video) {
         video.pause();
         video.currentTime = 0;
       }
     });
+  }
+
+  function showSlide(i) {
+
+    clearTimeout(timer);
+    clearVideos();
+
+    slides.forEach(slide => slide.classList.remove("active"));
 
     let current = slides[i];
     current.classList.add("active");
@@ -159,93 +164,34 @@ document.addEventListener("DOMContentLoaded", function () {
     let video = current.querySelector("video");
 
     if (video) {
-      video.play();
+
+      video.muted = true;
+      video.playsInline = true;
+
+      let playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          timer = setTimeout(nextSlide, 5000);
+        });
+      }
 
       video.onended = () => {
         nextSlide();
       };
 
     } else {
-      // ⏱ IMAGE DURATION = 8 SECONDS (3 + 5 extra)
+      // IMAGE DISPLAY TIME = 8 SECONDS
       timer = setTimeout(nextSlide, 8000);
     }
   }
 
   function nextSlide() {
-    clearTimeout(timer);
     index = (index + 1) % slides.length;
     showSlide(index);
   }
 
   showSlide(index);
-
-});
-</script>
-
-</body>
-</html>
-  <!-- YOUR INITIALS -->
-  <div class="initials">A ❤️ (replace with your initials)</div>
-
-  <!-- SLIDER -->
-  <div class="slider">
-
-    <div class="slide active"><img src="photo1.jpg"></div>
-    <div class="slide"><img src="photo2.jpg"></div>
-    <div class="slide"><img src="photo3.jpg"></div>
-    <div class="slide"><img src="photo4.jpg"></div>
-    <div class="slide"><img src="photo5.jpg"></div>
-    <div class="slide"><img src="photo6.jpg"></div>
-    <div class="slide"><img src="photo7.jpg"></div>
-    <div class="slide"><img src="photo8.jpg"></div>
-    <div class="slide"><img src="photo9.jpg"></div>
-
-  </div>
-
-</div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-  // SLIDER FIX (IMPORTANT)
-  let slides = document.querySelectorAll(".slide");
-  let index = 0;
-
-  function showSlide() {
-    slides.forEach(s => s.classList.remove("active"));
-    slides[index].classList.add("active");
-
-    index++;
-    if (index >= slides.length) {
-      index = 0;
-    }
-
-    setTimeout(showSlide, 3000);
-  }
-
-  showSlide();
-
-  // GLITTER
-  for (let i = 0; i < 150; i++) {
-    let g = document.createElement("div");
-    g.className = "glitter";
-    g.style.left = Math.random() * window.innerWidth + "px";
-    g.style.animationDuration = (Math.random() * 4 + 2) + "s";
-    g.style.background = Math.random() > 0.5 ? "#ffd700" : "#c8a2ff";
-    document.body.appendChild(g);
-  }
-
-  // HEARTS
-  setInterval(() => {
-    let h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.bottom = "0px";
-    document.body.appendChild(h);
-
-    setTimeout(() => h.remove(), 6000);
-  }, 800);
 
 });
 </script>
