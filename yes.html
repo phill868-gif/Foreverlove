@@ -14,18 +14,21 @@ body {
   background: linear-gradient(135deg, #ffe8b0, #ecd8ff);
 }
 
-/* HEADER */
+/* MAIN HEADER */
 h1 {
   font-size: 22px;
   color: #5e3b87;
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
-/* MEMORIES */
-.memories {
-  margin-top: 15px;
-  font-size: 20px;
-  color: #d4af37;
+/* 💖 ROMANTIC MESSAGE */
+.message {
+  max-width: 85%;
+  margin: 10px auto 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #6b4aa0;
+  font-style: italic;
 }
 
 /* MUSIC BUTTON */
@@ -40,12 +43,20 @@ h1 {
   cursor: pointer;
 }
 
+/* MEMORIES TITLE */
+.memories {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #d4af37;
+}
+
 /* SLIDER */
 .slider {
   position: relative;
   width: 320px;
   height: 420px;
-  margin: 25px auto;
+  margin: 15px auto 40px;
   overflow: hidden;
   border-radius: 15px;
 }
@@ -78,16 +89,24 @@ h1 {
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
+<!-- 💖 HEADER -->
 <h1>Happy Birthday My Love 💖</h1>
 
-<div class="memories">Memories 💖</div>
+<!-- 💬 NEW ROMANTIC TEXT -->
+<div class="message">
+  Happy birthday my heartbeat, my world 💖<br>
+  Today is all about you and how much you mean to me ✨
+</div>
 
-<!-- ONLY ONE BUTTON -->
+<!-- 🎵 MUSIC BUTTON -->
 <button class="music-btn" id="musicBtn">💖 Play Music</button>
 
+<!-- 💎 MEMORIES -->
+<div class="memories">Memories 💖</div>
+
+<!-- SLIDER -->
 <div class="slider">
 
-  <!-- PHOTOS -->
   <div class="slide active"><img src="photo1.jpg"></div>
   <div class="slide"><img src="photo2.jpg"></div>
   <div class="slide"><img src="photo3.jpg"></div>
@@ -98,7 +117,6 @@ h1 {
   <div class="slide"><img src="photo8.jpg"></div>
   <div class="slide"><img src="photo9.jpg"></div>
 
-  <!-- VIDEOS -->
   <div class="slide"><video src="video1.mp4" muted playsinline></video></div>
   <div class="slide"><video src="video2.mp4" muted playsinline></video></div>
   <div class="slide"><video src="video3.mp4" muted playsinline></video></div>
@@ -113,19 +131,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const music = document.getElementById("bgMusic");
   const btn = document.getElementById("musicBtn");
 
-  let musicStarted = false;
+  let started = false;
 
-  // 🎵 PLAY ONCE ONLY (NO PAUSE FEATURE)
+  // 🎵 MUSIC START (ONCE ONLY)
   btn.addEventListener("click", () => {
 
-    if (!musicStarted) {
+    if (!started) {
+      started = true;
 
-      musicStarted = true;
       music.volume = 0;
-
       music.play().catch(() => {});
 
-      // fade in
       let v = 0;
       let fade = setInterval(() => {
         if (v < 0.5) {
@@ -137,16 +153,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 150);
 
       btn.innerText = "🎵 Playing...";
-
-      // disable button completely
       btn.disabled = true;
       btn.style.opacity = "0.6";
-      btn.style.cursor = "default";
     }
 
   });
 
-  // 🎞 SLIDESHOW
+  // SLIDER
   let slides = document.querySelectorAll(".slide");
   let index = 0;
   let timer;
