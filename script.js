@@ -4,44 +4,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const noBtn = document.getElementById("noBtn");
   const message = document.getElementById("message");
 
-  // 🎵 Create music dynamically
-  let music = new Audio("music.mp3");
-  music.loop = true;
-  music.volume = 0.4;
-
-  // YES CLICK → START MUSIC + REDIRECT
+  // 💖 YES → redirect ONLY (no music here)
   yesBtn.addEventListener("click", () => {
+    document.body.style.opacity = "0";
 
-    music.play().then(() => {
-
-      // Save state for next page
-      sessionStorage.setItem("musicPlaying", "true");
-
-      // small delay to lock playback
-      setTimeout(() => {
-        window.location.href = "yes.html";
-      }, 300);
-
-    }).catch(() => {
-      // fallback redirect
+    setTimeout(() => {
       window.location.href = "yes.html";
-    });
-
+    }, 700);
   });
 
-  // NO CLICK
+  // ❌ NO button message
   noBtn.addEventListener("click", () => {
     message.innerHTML = "You know I will always make you smile 💖";
   });
 
-  // NO BUTTON MOVES
+  // ❌ NO button moves (mobile-safe)
   noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
 
     noBtn.style.position = "absolute";
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
+
   });
 
 });
