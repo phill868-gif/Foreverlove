@@ -4,31 +4,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const noBtn = document.getElementById("noBtn");
   const message = document.getElementById("message");
 
-  // YES → Smooth fade then redirect
+  // 🎵 Create music dynamically
+  let music = new Audio("music.mp3");
+  music.loop = true;
+  music.volume = 0.4;
+
+  // YES CLICK → START MUSIC + REDIRECT
   yesBtn.addEventListener("click", () => {
-    document.body.style.opacity = "0";
-    document.body.style.transition = "opacity 1s ease";
-    setTimeout(() => {
+
+    music.play().then(() => {
+
+      // Save state for next page
+      sessionStorage.setItem("musicPlaying", "true");
+
+      // small delay to lock playback
+      setTimeout(() => {
+        window.location.href = "yes.html";
+      }, 300);
+
+    }).catch(() => {
+      // fallback redirect
       window.location.href = "yes.html";
-    }, 1000);
+    });
+
   });
 
-  // NO click
+  // NO CLICK
   noBtn.addEventListener("click", () => {
-    message.innerHTML =
-      "You know i will always make you smile💖";
+    message.innerHTML = "You know I will always make you smile 💖";
   });
 
-  // NO runs away safely (mobile + desktop)
+  // NO BUTTON MOVES
   noBtn.addEventListener("mouseover", () => {
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
-
-    const maxX = window.innerWidth - btnWidth - 10;
-    const maxY = window.innerHeight - btnHeight - 10;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
 
     noBtn.style.position = "absolute";
     noBtn.style.left = x + "px";
