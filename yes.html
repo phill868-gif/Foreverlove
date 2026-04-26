@@ -11,11 +11,11 @@ body {
   padding: 0;
   text-align: center;
   font-family: 'Georgia', serif;
-  overflow: hidden;
+  overflow-x: hidden;
   opacity: 0;
   background: linear-gradient(135deg, #ffe8b0, #ecd8ff);
   animation: glow 8s infinite alternate;
-  transition: opacity 2s ease;
+  transition: opacity 1.5s ease;
 }
 
 @keyframes glow {
@@ -23,28 +23,84 @@ body {
   to { background: linear-gradient(135deg, #ffd700, #d8b4ff); }
 }
 
+/* MAIN TEXT */
 .container {
-  margin-top: 25vh;
+  margin-top: 12vh;
   padding: 20px;
   position: relative;
   z-index: 2;
 }
 
 h1 {
-  font-size: 28px; /* smaller & romantic */
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.6;
   color: #5e3b87;
-  text-shadow: 1px 1px 6px rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
 }
 
-.glitter {
+/* TITLE */
+.memories-title {
+  margin-top: 30px;
+  font-size: 26px;
+  color: #d4af37;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlide 2s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SLIDER */
+.slider {
+  position: relative;
+  width: 320px;
+  height: 400px;
+  margin: 25px auto;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.slide {
   position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* IMAGE */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* VIDEO */
+.slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* GLITTER */
+.glitter {
+  position: fixed;
   width: 4px;
   height: 4px;
   border-radius: 50%;
   animation: fall linear infinite;
-  opacity: 0.8;
 }
 
 @keyframes fall {
@@ -52,13 +108,9 @@ h1 {
   100% { transform: translateY(110vh); opacity: 0; }
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.5); }
-}
-
+/* HEARTS */
 .heart {
-  position: absolute;
+  position: fixed;
   font-size: 18px;
   animation: floatUp 6s linear forwards;
 }
@@ -71,15 +123,43 @@ h1 {
 </head>
 
 <body>
+
 <div class="container">
+
   <h1>
-    Yes i love you too, <br>
-    My Achalugo 💖💘, My lover 💓<br>
-    If you’re tired, let me be your calm, my queen✨💕
+    Yes I love you too 💖<br>
+    My Achalugo 💘 My Queen 💓<br>
+    You are my peace, my calm, my forever ✨
   </h1>
+
+  <!-- TITLE -->
+  <div class="memories-title">Our Memories 💖</div>
+
+  <!-- SLIDER (IMAGE + VIDEO) -->
+  <div class="slider">
+
+    <div class="slide active">
+      <img src="photo1.jpg">
+    </div>
+
+    <div class="slide">
+      <video src="video1.mp4" muted playsinline></video>
+    </div>
+
+    <div class="slide">
+      <img src="photo2.jpg">
+    </div>
+
+    <div class="slide">
+      <video src="video2.mp4" muted playsinline></video>
+    </div>
+
+  </div>
+
 </div>
 
-<audio id="bgMusic" src="music.mp3"></audio>
+<!-- MUSIC -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -87,33 +167,325 @@ document.addEventListener("DOMContentLoaded", function () {
   // Fade in page
   document.body.style.opacity = "1";
 
+  // MUSIC
   const music = document.getElementById("bgMusic");
-  music.volume = 0.5;
-  music.play();
-
-  // Glitter sparkles
-  for (let i = 0; i < 200; i++) {
-    let glitter = document.createElement("div");
-    glitter.classList.add("glitter");
-    glitter.style.left = Math.random() * window.innerWidth + "px";
-    glitter.style.animationDuration = (Math.random() * 4 + 2) + "s";
-    glitter.style.background = Math.random() > 0.5 ? "#ffd700" : "#c8a2ff";
-    if (Math.random() > 0.6) glitter.style.animation += ", twinkle 2s infinite";
-    document.body.appendChild(glitter);
+  if (music) {
+    music.volume = 0.4;
+    music.play();
   }
 
-  // Floating hearts
+  // SLIDER LOGIC
+  let slides = document.querySelectorAll(".slide");
+  let index = 0;
+  let timer;
+
+  function showSlide(i) {
+
+    slides.forEach(slide => {
+      slide.classList.remove("active");
+
+      let video = slide.querySelector("video");
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+        video.onended = null;
+      }
+    });
+
+    let current = slides[i];
+    current.classList.add("active");
+
+    let video = current.querySelector("video");
+
+    if (video) {
+      video.play();
+
+      video.onended = () => {
+        nextSlide();
+      };
+
+    } else {
+      timer = setTimeout(nextSlide, 3000);
+    }
+  }
+
+  function nextSlide() {
+    clearTimeout(timer);
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }
+
+  showSlide(index);
+
+  // GLITTER
+  for (let i = 0; i < 150; i++) {
+    let g = document.createElement("div");
+    g.className = "glitter";
+    g.style.left = Math.random() * window.innerWidth + "px";
+    g.style.animationDuration = (Math.random() * 4 + 2) + "s";
+    g.style.background = Math.random() > 0.5 ? "#ffd700" : "#c8a2ff";
+    document.body.appendChild(g);
+  }
+
+  // HEARTS
   setInterval(() => {
     let heart = document.createElement("div");
-    heart.classList.add("heart");
+    heart.className = "heart";
     heart.innerHTML = "💖";
     heart.style.left = Math.random() * window.innerWidth + "px";
     heart.style.bottom = "0px";
     document.body.appendChild(heart);
+
     setTimeout(() => heart.remove(), 6000);
   }, 800);
 
 });
 </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever 💖</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Georgia', serif;
+  overflow-x: hidden;
+  opacity: 0;
+  background: linear-gradient(135deg, #ffe8b0, #ecd8ff);
+  animation: glow 8s infinite alternate;
+  transition: opacity 1.5s ease;
+}
+
+@keyframes glow {
+  from { background: linear-gradient(135deg, #ffe8b0, #ecd8ff); }
+  to { background: linear-gradient(135deg, #ffd700, #d8b4ff); }
+}
+
+/* MAIN TEXT */
+.container {
+  margin-top: 12vh;
+  padding: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #5e3b87;
+  line-height: 1.6;
+}
+
+/* TITLE */
+.memories-title {
+  margin-top: 30px;
+  font-size: 26px;
+  color: #d4af37;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlide 2s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SLIDER */
+.slider {
+  position: relative;
+  width: 320px;
+  height: 400px;
+  margin: 25px auto;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* IMAGE */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* VIDEO */
+.slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+/* GLITTER */
+.glitter {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  font-size: 18px;
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>
+    Yes I love you too 💖<br>
+    My Achalugo 💘 My Queen 💓<br>
+    You are my peace, my calm, my forever ✨
+  </h1>
+
+  <!-- TITLE -->
+  <div class="memories-title">Our Memories 💖</div>
+
+  <!-- SLIDER (IMAGE + VIDEO) -->
+  <div class="slider">
+
+    <div class="slide active">
+      <img src="photo1.jpg">
+    </div>
+
+    <div class="slide">
+      <video src="video1.mp4" muted playsinline></video>
+    </div>
+
+    <div class="slide">
+      <img src="photo2.jpg">
+    </div>
+
+    <div class="slide">
+      <video src="video2.mp4" muted playsinline></video>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Fade in page
+  document.body.style.opacity = "1";
+
+  // MUSIC
+  const music = document.getElementById("bgMusic");
+  if (music) {
+    music.volume = 0.4;
+    music.play();
+  }
+
+  // SLIDER LOGIC
+  let slides = document.querySelectorAll(".slide");
+  let index = 0;
+  let timer;
+
+  function showSlide(i) {
+
+    slides.forEach(slide => {
+      slide.classList.remove("active");
+
+      let video = slide.querySelector("video");
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+        video.onended = null;
+      }
+    });
+
+    let current = slides[i];
+    current.classList.add("active");
+
+    let video = current.querySelector("video");
+
+    if (video) {
+      video.play();
+
+      video.onended = () => {
+        nextSlide();
+      };
+
+    } else {
+      timer = setTimeout(nextSlide, 3000);
+    }
+  }
+
+  function nextSlide() {
+    clearTimeout(timer);
+    index = (index + 1) % slides.length;
+    showSlide(index);
+  }
+
+  showSlide(index);
+
+  // GLITTER
+  for (let i = 0; i < 150; i++) {
+    let g = document.createElement("div");
+    g.className = "glitter";
+    g.style.left = Math.random() * window.innerWidth + "px";
+    g.style.animationDuration = (Math.random() * 4 + 2) + "s";
+    g.style.background = Math.random() > 0.5 ? "#ffd700" : "#c8a2ff";
+    document.body.appendChild(g);
+  }
+
+  // HEARTS
+  setInterval(() => {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.bottom = "0px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+  }, 800);
+
+});
+</script>
+
 </body>
 </html>
